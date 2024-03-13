@@ -22,8 +22,16 @@ export const AccountInfo: FC = () => {
 
     const updateAccountInfo = useCallback(async () => {
         if (!trader) return;
+        const cashBalance = trader.getCashBalance().toDecimal()
+        const portfolioValue = trader.getPortfolioValue().toDecimal()
+        const orderData = Array.from(await Promise.all(trader.getOpenOrders([selectedProduct.name])))
 
-        // Fetch & Update Trader Account information
+        setCashBalance(cashBalance)
+        setPortfolioValue(portfolioValue)
+        setOrderData(orderData)
+
+        setUpdated(true)
+        setLastUpdated(Date.now())
 
     }, [trader, selectedProduct]); // Removed markPrice and indexPrice
 
